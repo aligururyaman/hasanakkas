@@ -67,7 +67,7 @@ app.use("/api", otherRoutes)
 app.use('/api', cartRoutes);
 
 
-app.listen(`hasanakkas.vercel.app:2000`, () => {
+app.listen(2000, () => {
   console.log("Your server is running on port 2000");
 });
 
