@@ -1,12 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { baseUrl } from "@/config";
+import { baseUrl, apiKey } from "@/config";
+
+// Axios instance'ı oluşturun ve apiKey'i headers'a ekleyin
+const axiosInstance = axios.create({
+  baseURL: baseUrl,
+  headers: {
+    "api-key": apiKey,
+    "Content-Type": "application/json",
+  },
+});
 
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${baseUrl}/categories`);
+      const response = await axiosInstance.get("/categories");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -18,7 +27,7 @@ export const addCategory = createAsyncThunk(
   "categories/addCategory",
   async (categoryData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${baseUrl}/categories`, categoryData);
+      const response = await axiosInstance.post("/categories", categoryData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -30,7 +39,7 @@ export const deleteCategory = createAsyncThunk(
   "categories/deleteCategory",
   async (categoryId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${baseUrl}/categories/${categoryId}`);
+      await axiosInstance.delete(`/categories/${categoryId}`);
       return categoryId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -42,8 +51,8 @@ export const updateCategory = createAsyncThunk(
   "categories/updateCategory",
   async ({ categoryId, categoryData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${baseUrl}/categories/${categoryId}`,
+      const response = await axiosInstance.put(
+        `/categories/${categoryId}`,
         categoryData
       );
       return response.data;
