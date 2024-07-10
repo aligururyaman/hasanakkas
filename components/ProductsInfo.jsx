@@ -14,7 +14,7 @@ import kimyon from "../app/utils/infoImg/kimyon.png";
 import sumak from "../app/utils/infoImg/sumak.png";
 import tahin from "../app/utils/infoImg/tahin.png";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // useRouter from next/navigation
+import { useRouter } from "next/navigation";
 
 function ProductsInfo() {
   const router = useRouter();

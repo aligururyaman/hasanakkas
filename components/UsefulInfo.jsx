@@ -18,7 +18,7 @@ function UsefulInfo() {
           <p className="text-md"><span className="font-bold">Fiziksel Performansı Artırma:</span> Kafein, adrenalin seviyelerini artırarak fiziksel performansı iyileştirir.</p>
           <p className="text-md"><span className="font-bold">Metabolizmayı Hızlandırma:</span> Kahve, metabolizma hızını artırır ve yağ yakımını destekler.</p>
         </div>
-        <ProductsInfo />
+        {/* <ProductsInfo /> */}
       </div>
     </div>
   )
