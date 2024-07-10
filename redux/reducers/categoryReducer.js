@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { baseUrl, apiKey } from "@/config";
 
-// Axios instance'ı oluşturun ve apiKey'i headers'a ekleyin
 const axiosInstance = axios.create({
   baseURL: baseUrl,
   headers: {
