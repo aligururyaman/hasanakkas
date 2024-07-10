@@ -32,6 +32,7 @@ const SlideText = ({ source }) => {
       <span style={{ visibility: "hidden" }}>{source[currentItemIndex]}</span>
       {source.map((text, index) => (
         <span
+          key={index}
           ref={currentItemIndex === index ? rectRef : null}
           style={{
             position: "absolute",
