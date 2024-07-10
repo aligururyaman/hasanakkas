@@ -30,7 +30,7 @@ const productsDetails = {
   },
 };
 
-const Page = () => {
+const InfoPage = () => {
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
 
@@ -48,4 +48,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default InfoPage;

@@ -6,7 +6,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 
-function Page() {
+function BasketPage() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items);
   const user = useSelector((state) => state.user.user);
@@ -91,4 +91,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default BasketPage;
