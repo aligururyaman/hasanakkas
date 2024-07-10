@@ -1,5 +1,5 @@
 import connectDB from "../mongoose";
-import User from "../../../models/user"; // Modelinizi uygun şekilde içe aktarın
+import User from "@/db/models/user.model";"; // Modelinizi uygun şekilde içe aktarın 
 
 export default async function handler(req, res) {
   await connectDB();
