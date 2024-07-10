@@ -67,7 +67,7 @@ app.use("/api", otherRoutes)
 app.use('/api', cartRoutes);
 
 
-app.listen(2000, () => {
+app.listen(process.env.CLOUDINARY_NAME, () => {
   console.log("Your server is running on port 2000");
 });
 
