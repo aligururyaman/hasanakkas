@@ -4,7 +4,7 @@ import {
   clearCart,
   getCart,
   removeFromCart,
-} from "../controller/cart.controller.js";
+} from "../controller/cart.controller.js/index.js";
 
 const router = Router();
 

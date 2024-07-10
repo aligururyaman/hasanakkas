@@ -1,5 +1,5 @@
-import Product from "../models/product.model";
-import { uploadImageToCloudinary } from "../utils/fileUpload";
+import Product from "../models/product.model.js";
+import { uploadImageToCloudinary } from "../utils/fileUpload.js";
 
 export const createProduct = async (req, res) => {
   try {

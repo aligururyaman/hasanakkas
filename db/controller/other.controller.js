@@ -1,4 +1,4 @@
-import Other from "../models/other.models";
+import Other from "../models/other.models.js";
 
 export const createOther = async (req, res) => {
   try {

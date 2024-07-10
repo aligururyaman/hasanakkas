@@ -1,10 +1,10 @@
 import express from "express";
-import {
+const {
   createReview,
-  deleteReview,
   getReviews,
   updateReview,
-} from "../controller/reviews.controller.js";
+  deleteReview,
+} = require("../controller/reviews.controller.js/index.js");
 const router = express.Router();
 
 router.post("/rewiews", createReview);
@@ -12,4 +12,4 @@ router.get("/rewiews", getReviews);
 router.put("/rewiews/:id", updateReview);
 router.delete("/rewiews/:id", deleteReview);
 
-export default router;
+module.exports = router;

@@ -4,7 +4,7 @@ import {
   deleteOtherById,
   getAllOther,
   updateOtherById,
-} from "../controller/other.controller.js";
+} from "../controller/other.controller.js/index.js";
 
 const router = express.Router();
 

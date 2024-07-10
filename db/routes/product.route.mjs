@@ -1,12 +1,12 @@
 import express from "express";
-import { upload } from "../middleware/multer.js";
+import { upload } from "../middleware/multer";
 import {
   createProduct,
   deleteProduct,
   getAllProducts,
   getProductsById,
   updateProducts,
-} from "../controller/product.controller.js";
+} from "../controller/product.controller.js/index.js";
 
 const router = express.Router();
 

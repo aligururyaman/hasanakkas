@@ -1,4 +1,4 @@
-import { default as Order } from "../models/order.model";
+import { default as Order } from "../models/order.model.mjs";
 
 export async function createOrder(req, res) {
   try {

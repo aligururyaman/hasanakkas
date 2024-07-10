@@ -1,4 +1,4 @@
-const Basket = require("../models/basket.model");
+const Basket = require("../models/basket.model.mjs");
 
 const addBasketItem = async (req, res) => {
   try {
