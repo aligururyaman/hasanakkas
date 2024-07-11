@@ -11,20 +11,15 @@ const initialState = {
 };
 
 // Tarayıcıda olduğumuzu kontrol edin ve localStorage'dan user bilgisini alın
-if (typeof window !== "undefined") {
-  initialState.user = JSON.parse(localStorage.getItem("user")) || "";
-}
-
 // Define the fetchLoginUser async thunk
 export const fetchLoginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
     try {
-      const response = await axios.post(`${mainUrl}/signin`, {
+      const response = await axios.post("/api/userRoute", {
         email,
         password,
       });
-      // Assuming the response includes user data and token
       const { data } = response;
       if (typeof window !== "undefined") {
         localStorage.setItem("token", data.token);
@@ -37,10 +32,22 @@ export const fetchLoginUser = createAsyncThunk(
   }
 );
 
+export const checkAuthState = createAsyncThunk(
+  "auth/checkAuthState",
+  async () => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (token && user) {
+      return JSON.parse(user);
+    }
+    throw new Error("No token or user found");
+  }
+);
+
 export const signUpUser = createAsyncThunk(
   "user/signUp",
   async ({ firstName, lastName, email, password }) => {
-    const response = await axios.post(`${mainUrl}/register`, {
+    const response = await axios.post(`${mainUrl}/api/register`, {
       firstName,
       lastName,
       email,
@@ -53,7 +60,7 @@ export const signUpUser = createAsyncThunk(
 // Define the getUser async thunk
 export const getUser = createAsyncThunk("fetch/user", async (id) => {
   try {
-    const response = await axios.get(`${mainUrl}/user/profile?id=${id}`);
+    const response = await axios.get(`${baseUrl}/user/profile?id=${id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -63,7 +70,7 @@ export const getUser = createAsyncThunk("fetch/user", async (id) => {
 // Define the fetch all users async thunk
 export const fetchAllUsers = createAsyncThunk("fetch/allUsers", async () => {
   try {
-    const response = await axios.get(`${mainUrl}/users`);
+    const response = await axios.get(`${baseUrl}/users`);
     return response.data;
   } catch (error) {
     throw error;
@@ -132,6 +139,18 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(signUpUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(checkAuthState.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(checkAuthState.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.user = payload;
+        state.error = null;
+      })
+      .addCase(checkAuthState.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

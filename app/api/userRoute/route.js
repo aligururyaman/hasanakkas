@@ -1,59 +1,88 @@
-import express from "express";
-
+import User from "@/db/models/user.model";
+import { dbConnect } from "@/lib/db";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import User from "@/db/models/user.model";
-import { authMiddleware } from "../authMiddleware/authMiddleware";
-
-const router = express.Router();
-
-// Register a new user
-router.post("/register", async (req, res) => {
+// GET request to fetch all users
+export async function GET(req) {
   try {
-    const { firstName, lastName, email, password } = req.body;
-    const user = new User({ firstName, lastName, email, password });
-    await user.save();
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Login a user
-router.post("/signin", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user || !(await user.matchPassword(password))) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-    res.json({ user, token });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Get user profile
-router.get("/user/profile", authMiddleware, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    res.json(user);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Get all users
-router.get("/users", authMiddleware, async (req, res) => {
-  try {
+    await dbConnect();
     const users = await User.find();
-    res.json(users);
+    return new Response(JSON.stringify(users), { status: 200 });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error("Error fetching users:", error);
+    return new Response("Error fetching users", { status: 500 });
   }
-});
+}
 
-export default router;
+// POST request to add a new user
+export async function POST(req) {
+  try {
+    await dbConnect();
+    const { email, password } = await req.json();
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return new Response(JSON.stringify({ message: "User not found" }), {
+        status: 404,
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return new Response(JSON.stringify({ message: "Invalid credentials" }), {
+        status: 400,
+      });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    return new Response(JSON.stringify({ token, user }), { status: 200 });
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    return new Response(
+      JSON.stringify({
+        message: "Error logging in user",
+        details: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+}
+
+// DELETE request to delete a user by ID
+export async function DELETE(req) {
+  try {
+    await dbConnect();
+    const id = req.nextUrl.searchParams.get("id");
+    await User.findByIdAndDelete(id);
+    return new Response("User deleted", { status: 200 });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return new Response("Error deleting user", {
+      status: 500,
+      statusText: error.message,
+    });
+  }
+}
+
+// PUT request to update a user by ID
+export async function PUT(req) {
+  try {
+    await dbConnect();
+    const id = req.nextUrl.searchParams.get("id");
+    const userData = await req.json();
+    const updatedUser = await User.findByIdAndUpdate(id, userData, {
+      new: true,
+    });
+    return new Response(JSON.stringify(updatedUser), { status: 200 });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return new Response("Error updating user", {
+      status: 500,
+      statusText: error.message,
+    });
+  }
+}

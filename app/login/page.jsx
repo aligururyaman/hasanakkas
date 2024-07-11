@@ -6,7 +6,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { fetchLoginUser } from "@/redux/reducers/userReducer";
+import { fetchLoginUser, checkAuthState } from "@/redux/reducers/userReducer";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,6 +16,12 @@ function LoginPage() {
   const loading = useSelector((state) => state.user.loading);
   const user = useSelector((state) => state.user.user);
   const error = useSelector((state) => state.user.error);
+
+  useEffect(() => {
+    dispatch(checkAuthState()).unwrap().catch(() => {
+      // Oturum bulunamadı, login ekranında kal
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -31,7 +37,7 @@ function LoginPage() {
     dispatch(fetchLoginUser({ email, password }))
       .unwrap()
       .then((user) => {
-        router.push(`/profile/${user._id}`); // Giriş başarılı olduğunda yönlendirme yapın
+        router.push(`/profile/${user._id}`);
       })
       .catch((err) => {
         console.error("Login failed:", err);
@@ -64,7 +70,7 @@ function LoginPage() {
         <Button variant="destructive" onClick={handleLogin} disabled={loading}>
           {loading ? "Yükleniyor..." : "Giriş Yap"}
         </Button>
-        <Link href="/signin">
+        <Link href="/register">
           <Button variant="link" className="text-black text-sm font-thin">
             Hesabınız yok mu? Hesap Oluşturun.
           </Button>
