@@ -1,4 +1,4 @@
-import { baseUrl } from "@/config";
+import { baseUrl, mainUrl } from "@/config";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios"; // Import Axios
 
@@ -20,7 +20,7 @@ export const fetchLoginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
     try {
-      const response = await axios.post(`${baseUrl}/signin`, {
+      const response = await axios.post(`${mainUrl}/signin`, {
         email,
         password,
       });
@@ -40,7 +40,7 @@ export const fetchLoginUser = createAsyncThunk(
 export const signUpUser = createAsyncThunk(
   "user/signUp",
   async ({ firstName, lastName, email, password }) => {
-    const response = await axios.post(`${baseUrl}/register`, {
+    const response = await axios.post(`${mainUrl}/register`, {
       firstName,
       lastName,
       email,
@@ -53,7 +53,7 @@ export const signUpUser = createAsyncThunk(
 // Define the getUser async thunk
 export const getUser = createAsyncThunk("fetch/user", async (id) => {
   try {
-    const response = await axios.get(`${baseUrl}/user/profile?id=${id}`);
+    const response = await axios.get(`${mainUrl}/user/profile?id=${id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -63,7 +63,7 @@ export const getUser = createAsyncThunk("fetch/user", async (id) => {
 // Define the fetch all users async thunk
 export const fetchAllUsers = createAsyncThunk("fetch/allUsers", async () => {
   try {
-    const response = await axios.get(`${baseUrl}/users`);
+    const response = await axios.get(`${mainUrl}/users`);
     return response.data;
   } catch (error) {
     throw error;
