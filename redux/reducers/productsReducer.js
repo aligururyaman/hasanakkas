@@ -7,7 +7,7 @@ export const fetchProductsByCategory = createAsyncThunk(
   async (categoryId, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${baseUrl}/products?category=${categoryId}`
+        `/api/productsRoute?category=${categoryId}`
       );
       return response.data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${baseUrl}/products`);
+      const response = await axios.get("/api/productsRoute");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -33,7 +33,7 @@ export const addProduct = createAsyncThunk(
   "products/addProduct",
   async (productData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${baseUrl}/products`, productData);
+      const response = await axios.post("/api/productsRoute", productData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -46,7 +46,7 @@ export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (productId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${baseUrl}/products/${productId}`);
+      await axios.delete(`/api/productsRoute/${productId}`);
       return productId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -60,7 +60,7 @@ export const updateProduct = createAsyncThunk(
   async ({ productId, productData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${baseUrl}/products/${productId}`,
+        `/api/productsRoute/${productId}`,
         productData
       );
       return response.data;

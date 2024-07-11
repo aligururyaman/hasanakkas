@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { baseUrl } from "@/config";
 
 export const fetchOther = createAsyncThunk(
   "other/fetchOther",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${baseUrl}/other`);
+      const response = await axios.get("/api/otherRoute");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -18,7 +17,7 @@ export const addOther = createAsyncThunk(
   "other/addOther",
   async (otherData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${baseUrl}/other`, otherData);
+      const response = await axios.post("/api/otherRoute", otherData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -30,7 +29,7 @@ export const deleteOther = createAsyncThunk(
   "other/deleteOther",
   async (otherId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${baseUrl}/other/${otherId}`);
+      await axios.delete(`/api/otherRoute/${otherId}`);
       return otherId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -42,10 +41,7 @@ export const updateOther = createAsyncThunk(
   "other/updateOther",
   async ({ otherId, otherData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${baseUrl}/other/${otherId}`,
-        otherData
-      );
+      const response = await axios.put(`/api/otherRoute/${otherId}`, otherData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

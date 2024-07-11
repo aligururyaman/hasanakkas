@@ -65,7 +65,7 @@ function Nav() {
   };
 
   const handleProfile = () => {
-    router.push(`${mainUrl}/profile/${user._id}`)
+    router.push(`/profile/${user._id}`)
   };
 
   const handleCategoryClick = (id) => {

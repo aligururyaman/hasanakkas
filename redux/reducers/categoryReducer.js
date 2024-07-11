@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { mainUrl } from "@/config";
 
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
@@ -18,10 +17,7 @@ export const addCategory = createAsyncThunk(
   "categories/addCategory",
   async (categoryData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${mainUrl}/api/categoriesRoute`,
-        categoryData
-      );
+      const response = await axios.post("/api/categoriesRoute", categoryData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -33,7 +29,7 @@ export const deleteCategory = createAsyncThunk(
   "categories/deleteCategory",
   async (categoryId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${mainUrl}/api/categoriesRoute?id=${categoryId}`);
+      await axios.delete(`/api/categoriesRoute?id=${categoryId}`);
       return categoryId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -46,7 +42,7 @@ export const updateCategory = createAsyncThunk(
   async ({ categoryId, categoryData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${mainUrl}/api/categoriesRoute?id=${categoryId}`,
+        `/api/categoriesRoute?id=${categoryId}`,
         categoryData
       );
       return response.data;
