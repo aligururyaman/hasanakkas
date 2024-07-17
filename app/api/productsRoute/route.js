@@ -1,22 +1,5 @@
 import Product from "@/db/models/product.model";
 import { dbConnect } from "@/lib/db";
-import Cors from "cors";
-
-const cors = Cors({
-  methods: ["GET", "POST", "DELETE", "PUT"],
-  origin: "https://hasanakkas.vercel.app", // İsteklerin bu kaynaktan gelmesine izin ver
-});
-
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-}
 
 export async function GET(req) {
   try {

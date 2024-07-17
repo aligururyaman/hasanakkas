@@ -4,30 +4,6 @@ import Other from "@/db/models/other.models";
 import { dbConnect } from "@/lib/db";
 import Cors from "cors";
 
-const cors = Cors({
-  methods: ["GET", "HEAD", "POST"],
-  origin: "https://hasanakkas.vercel.app", // Allow requests from this origin
-});
-
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-}
-
-export default async function handler(req, res) {
-  // Run the middleware
-  await runMiddleware(req, res, cors);
-
-  // Rest of your API logic here
-  res.json({ message: "Hello World" });
-}
-
 export async function GET(req, res) {
   try {
     await dbConnect();

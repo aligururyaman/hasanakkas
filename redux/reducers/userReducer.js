@@ -4,14 +4,15 @@ import axios from "axios"; // Import Axios
 
 // Define the initial state
 const initialState = {
-  user: "",
+  user:
+    JSON.parse(typeof window !== "undefined" && localStorage.getItem("user")) ||
+    "",
   users: [],
   loading: false,
   error: null,
 };
 
-// Tarayıcıda olduğumuzu kontrol edin ve localStorage'dan user bilgisini alın
-// Define the fetchLoginUser async thunk
+// Define the login thunk
 export const fetchLoginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
@@ -32,22 +33,10 @@ export const fetchLoginUser = createAsyncThunk(
   }
 );
 
-export const checkAuthState = createAsyncThunk(
-  "auth/checkAuthState",
-  async () => {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    if (token && user) {
-      return JSON.parse(user);
-    }
-    throw new Error("No token or user found");
-  }
-);
-
 export const signUpUser = createAsyncThunk(
   "user/signUp",
   async ({ firstName, lastName, email, password }) => {
-    const response = await axios.post("/api/register", {
+    const response = await axios.post("/api/userRoute", {
       firstName,
       lastName,
       email,
@@ -60,7 +49,7 @@ export const signUpUser = createAsyncThunk(
 // Define the getUser async thunk
 export const getUser = createAsyncThunk("fetch/user", async (id) => {
   try {
-    const response = await axios.get(`/user/profile?id=${id}`);
+    const response = await axios.get(`/api/user/profile?id=${id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -70,7 +59,7 @@ export const getUser = createAsyncThunk("fetch/user", async (id) => {
 // Define the fetch all users async thunk
 export const fetchAllUsers = createAsyncThunk("fetch/allUsers", async () => {
   try {
-    const response = await axios.get("/users");
+    const response = await axios.get("/api/users");
     return response.data;
   } catch (error) {
     throw error;
@@ -89,6 +78,12 @@ const userSlice = createSlice({
       if (typeof window !== "undefined") {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+      }
+    },
+    loadUserFromLocalStorage: (state) => {
+      const user = localStorage.getItem("user");
+      if (user) {
+        state.user = JSON.parse(user);
       }
     },
   },
@@ -141,22 +136,10 @@ const userSlice = createSlice({
       .addCase(signUpUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      })
-      .addCase(checkAuthState.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(checkAuthState.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.user = payload;
-        state.error = null;
-      })
-      .addCase(checkAuthState.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
       });
   },
 });
 
 // Export the reducer and action creator
-export const { signOut } = userSlice.actions;
+export const { signOut, loadUserFromLocalStorage } = userSlice.actions;
 export default userSlice.reducer;

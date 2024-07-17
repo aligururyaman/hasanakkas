@@ -35,12 +35,22 @@ function ProductPage() {
       return;
     }
 
-    dispatch(addToCart({
-      userId: user._id,
-      productId: product._id,
-      quantity: piece,
-    }));
-    console.log(user._id, product._id, piece);
+    if (!user || !user._id) {
+      console.error("User is not defined or missing _id");
+      return;
+    }
+    if (!product || !product._id) {
+      console.error("Product is not defined or missing _id");
+      return;
+    }
+    dispatch(
+      addToCart({
+        userId: user._id,
+        productId: product._id,
+        quantity: piece,
+      })
+    );
+
   };
 
   useEffect(() => {

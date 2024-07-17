@@ -17,11 +17,7 @@ function LoginPage() {
   const user = useSelector((state) => state.user.user);
   const error = useSelector((state) => state.user.error);
 
-  useEffect(() => {
-    dispatch(checkAuthState()).unwrap().catch(() => {
-      // Oturum bulunamadı, login ekranında kal
-    });
-  }, [dispatch]);
+
 
   useEffect(() => {
     if (user) {
@@ -70,7 +66,7 @@ function LoginPage() {
         <Button variant="destructive" onClick={handleLogin} disabled={loading}>
           {loading ? "Yükleniyor..." : "Giriş Yap"}
         </Button>
-        <Link href="/register">
+        <Link href="/signin">
           <Button variant="link" className="text-black text-sm font-thin">
             Hesabınız yok mu? Hesap Oluşturun.
           </Button>

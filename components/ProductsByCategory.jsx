@@ -1,10 +1,18 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "@/redux/reducers/productsReducer";
 import { Button } from "./ui/button";
 import { FaBasketShopping } from "react-icons/fa6";
+import { DotLoader } from "react-spinners";
+
+
+const override = {
+  display: 'block',
+  margin: '0 auto',
+  borderColor: 'red',
+};
 
 
 function ProductsByCategory() {
@@ -15,6 +23,7 @@ function ProductsByCategory() {
   const error = useSelector((state) => state.products.error);
   const searchParams = useSearchParams();
   const categoryId = searchParams.get('categoryId');
+  let [color, setColor] = useState('#FF0000');
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -28,7 +37,16 @@ function ProductsByCategory() {
     router.push(`/products/${id}?productId=${productId}`);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return
+  <div className="sweet-loading">
+    <DotLoader
+      color={color}
+      cssOverride={override}
+      size={50}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+    />
+  </div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
