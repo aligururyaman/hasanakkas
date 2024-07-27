@@ -30,7 +30,7 @@ function ProductsByCategory() {
   }, [dispatch]);
 
 
-  const filteredProducts = products.filter(product => product.category._id === categoryId);
+  const filteredProducts = products.filter(product => product.category && product.category._id === categoryId);
 
   const handleCategoryClick = (id) => {
     const productId = `${id}`;

@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useState, useRef } from "react";
-import { Rect, useRect } from "react-use-rect";
+import { useEffect, useState } from "react";
+import { useRect } from "react-use-rect";
 
-const mock = ["Kahve", "Biber", "Kimyon"];
+const mock = ["Kahve", "Biber", "Kimyon", "Karabiber", "Tarçın"];
 
 const SlideText = ({ source }) => {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);

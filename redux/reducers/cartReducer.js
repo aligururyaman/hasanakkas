@@ -1,34 +1,44 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchCart = createAsyncThunk(
-  "cart/fetchCart",
-  async (userId, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`/api/cartRoute?userId=${userId}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+const serverUrl = process.env.REACT_APP_API_URL || "http://51.20.135.157:2000";
+
+export const fetchCart = createAsyncThunk("cart/fetchCart", async (userId) => {
+  const response = await axios.get(`${serverUrl}/api/carts/user/${userId}`);
+  return response.data;
+});
 
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async (item, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(`/api/cartRoute`, {
-        user: item.userId,
-        items: [{ product: item.productId, quantity: item.quantity }],
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  async ({ userId, productId, quantity }) => {
+    const response = await axios.post(`${serverUrl}/api/carts`, {
+      userId,
+      productId,
+      quantity,
+    });
+    return response.data;
   }
 );
 
-// Diğer async thunk action'larını benzer şekilde oluşturabilirsin...
+export const updateQuantity = createAsyncThunk(
+  "cart/updateQuantity",
+  async ({ userId, productId, quantity }) => {
+    const response = await axios.put(`${serverUrl}/api/carts`, {
+      userId,
+      productId,
+      quantity,
+    });
+    return response.data;
+  }
+);
+
+export const deleteCart = createAsyncThunk(
+  "cart/deleteCart",
+  async ({ userId, itemId }) => {
+    await axios.delete(`${serverUrl}/api/carts/user/${userId}/item/${itemId}`);
+    return itemId;
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
@@ -45,16 +55,21 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload;
+        state.items = action.payload.items;
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload;
+        state.error = action.error.message;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        state.items.push(action.payload);
+        state.items = action.payload.items;
+      })
+      .addCase(updateQuantity.fulfilled, (state, action) => {
+        state.items = action.payload.items;
+      })
+      .addCase(deleteCart.fulfilled, (state) => {
+        state.items = [];
       });
-    // Diğer durumlar için eklemeler yapabilirsin...
   },
 });
 

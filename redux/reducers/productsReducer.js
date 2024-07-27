@@ -1,13 +1,13 @@
-import { baseUrl } from "@/config";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const serverUrl = process.env.REACT_APP_API_URL || "http://51.20.135.157:2000";
 
 export const fetchProductsByCategory = createAsyncThunk(
   "products/fetchProductsByCategory",
   async (categoryId, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `/api/productsRoute?category=${categoryId}`
+        `${serverUrl}/api/products/category=${categoryId}`
       );
       return response.data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/productsRoute");
+      const response = await axios.get(`${serverUrl}/api/products`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -28,12 +28,14 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-// Async thunk action creator to add a product
 export const addProduct = createAsyncThunk(
   "products/addProduct",
   async (productData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/productsRoute", productData);
+      const response = await axios.post(
+        `${serverUrl}/api/products`,
+        productData
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -46,7 +48,7 @@ export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (productId, { rejectWithValue }) => {
     try {
-      await axios.delete(`/api/productsRoute/${productId}`);
+      await axios.delete(`${serverUrl}/api/products/${productId}`);
       return productId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -60,7 +62,7 @@ export const updateProduct = createAsyncThunk(
   async ({ productId, productData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `/api/productsRoute/${productId}`,
+        `${serverUrl}/api/products/${productId}`,
         productData
       );
       return response.data;

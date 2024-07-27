@@ -1,8 +1,8 @@
-import { baseUrl, mainUrl } from "@/config";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios"; // Import Axios
+import axios from "axios";
 
-// Define the initial state
+const serverUrl = process.env.REACT_APP_API_URL || "http://51.20.135.157:2000";
+
 const initialState = {
   user:
     JSON.parse(typeof window !== "undefined" && localStorage.getItem("user")) ||
@@ -15,9 +15,9 @@ const initialState = {
 // Define the login thunk
 export const fetchLoginUser = createAsyncThunk(
   "auth/loginUser",
-  async ({ email, password }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/userRoute", {
+      const response = await axios.post(`${serverUrl}/api/signin`, {
         email,
         password,
       });
@@ -28,43 +28,53 @@ export const fetchLoginUser = createAsyncThunk(
       }
       return data.user;
     } catch (error) {
-      throw error;
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const signUpUser = createAsyncThunk(
   "user/signUp",
-  async ({ firstName, lastName, email, password }) => {
-    const response = await axios.post("/api/userRoute", {
-      firstName,
-      lastName,
-      email,
-      password,
-    });
-    return response.data;
+  async ({ firstName, lastName, email, password }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${serverUrl}/api/register`, {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
 // Define the getUser async thunk
-export const getUser = createAsyncThunk("fetch/user", async (id) => {
-  try {
-    const response = await axios.get(`/api/user/profile?id=${id}`);
-    return response.data;
-  } catch (error) {
-    throw error;
+export const getUser = createAsyncThunk(
+  "fetch/user",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${serverUrl}/api/user/profile/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 // Define the fetch all users async thunk
-export const fetchAllUsers = createAsyncThunk("fetch/allUsers", async () => {
-  try {
-    const response = await axios.get("/api/users");
-    return response.data;
-  } catch (error) {
-    throw error;
+export const fetchAllUsers = createAsyncThunk(
+  "fetch/allUsers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${serverUrl}/api/users`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 // Create the auth slice
 const userSlice = createSlice({
@@ -99,7 +109,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchLoginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload.message;
       })
       .addCase(getUser.pending, (state) => {
         state.loading = true;
@@ -111,7 +121,7 @@ const userSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload.message;
       })
       .addCase(fetchAllUsers.pending, (state) => {
         state.loading = true;
@@ -123,7 +133,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchAllUsers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload.message;
       })
       .addCase(signUpUser.pending, (state) => {
         state.loading = true;
@@ -135,7 +145,7 @@ const userSlice = createSlice({
       })
       .addCase(signUpUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload.message;
       });
   },
 });

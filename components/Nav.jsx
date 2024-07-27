@@ -16,7 +16,6 @@ import { fetchCategories } from "@/redux/reducers/categoryReducer";
 import { Button } from "@/components/ui/button";
 import { fetchOther } from "@/redux/reducers/otherReducer";
 import { signOut } from "@/redux/reducers/userReducer";
-import { mainUrl } from "@/config";
 import { useRouter } from "next/navigation";
 import { FaBasketShopping } from "react-icons/fa6";
 
@@ -107,7 +106,7 @@ function Nav() {
                         <ListItem
                           key={others._id}
                           title={others.name}
-                          href={`${mainUrl}/category/${others._id}`}
+                          href={`/category/${others._id}`}
                         />
                       ))}
                   </ul>
