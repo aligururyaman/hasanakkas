@@ -53,7 +53,7 @@ function Best() {
 
   return (
     <div className="flex w-full justify-center my-20">
-      <div className="App" style={{ color: "black", fontSize: "6rem", fontWeight: 'bold' }}>
+      <div className="font-bold 3xl:text-9xl xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl xs:text-4xl text-3xl">
         Taze Çekilmiş  <SlideText source={mock} />
       </div>
     </div>
