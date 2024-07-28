@@ -52,9 +52,11 @@ const SlideText = ({ source }) => {
 function Best() {
 
   return (
-    <div className="flex w-full justify-center my-20">
-      <div className="font-bold 3xl:text-9xl xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl xs:text-4xl text-3xl">
-        Taze Çekilmiş  <SlideText source={mock} />
+    <div className="flex w-full bg-primary my-10 rounded-xl shadow-md">
+      <div className="flex w-full justify-center my-20">
+        <div className="font-bold 3xl:text-9xl xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl xs:text-3xl text-2xl">
+          Taze Çekilmiş  <SlideText source={mock} />
+        </div>
       </div>
     </div>
   )

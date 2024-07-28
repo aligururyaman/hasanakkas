@@ -21,7 +21,6 @@ function UsefulInfo() {
           <p>buraya dükkandaki kahve resmi gelecek</p>
         </div>
       </div>
-
     </div>
   )
 }

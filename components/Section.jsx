@@ -43,8 +43,8 @@ export default function Section() {
       <div className="relative w-full h-[400px]">
         <div className="absolute left-32 z-10 w-full flex items-center h-full">
           <div className="flex justify-center items-center">
-            <div className="h-96 w-96 bg-red-200 rounded-full opacity-70" />
-            <Image src={logo} height={200} width={200} className="absolute" alt="image1" />
+            <div className="sm:flex hidden h-96 w-96 bg-red-200 rounded-full opacity-70" />
+            <Image src={logo} height={200} width={200} className="sm:flex hidden absolute" alt="image1" />
           </div>
         </div>
         <div className="w-full z-0">

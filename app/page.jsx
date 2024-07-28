@@ -15,7 +15,7 @@ export default function Home() {
         <Section />
       </div>
       {/* RESPONSİVE YAPILMADI */}
-      <div className="flex w-full bg-primary my-10 rounded-xl shadow-md">
+      <div>
         <Best />
       </div>
       {/* RESPONSİVE YAPILDI */}
