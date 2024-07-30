@@ -18,6 +18,9 @@ import { fetchOther } from "@/redux/reducers/otherReducer";
 import { signOut } from "@/redux/reducers/userReducer";
 import { useRouter } from "next/navigation";
 import { FaBasketShopping } from "react-icons/fa6";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { CgPushChevronRight } from "react-icons/cg";
+
 
 const ListItem = React.forwardRef(
   ({ className, title, children, href, ...props }, ref) => {
@@ -51,6 +54,11 @@ function Nav() {
   const { other } = useSelector((state) => state.other);
   const { user } = useSelector((state) => state.user);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  }
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -70,6 +78,7 @@ function Nav() {
   const handleCategoryClick = (id) => {
     const categoryId = `${id}`;
     router.push(`/category/${id}?categoryId=${categoryId}`);
+    setMenuOpen(false);
   };
 
   // Kullanıcı durumu yüklenene kadar boş bir render yap
@@ -79,12 +88,31 @@ function Nav() {
 
   return (
     <div className="flex justify-between">
-      <div className="flex relative z-30">
+      <div className="flex md:hidden">
+        <div onClick={toggleMenu}>
+          <GiHamburgerMenu size={33} />
+        </div>
+        {menuOpen && (
+          <ul className='flex flex-col gap-4 absolute z-30 bg-background mt-10 w-96 px-5'>
+            {categories.map(category => (
+              <li key={category._id} className='flex flex-row  text-lg hover:cursor-pointer items-center gap-4 hover:scale-105' onClick={() => handleCategoryClick(category._id)}>
+                <p className="text-xl font-bold">{category.name}</p>
+                <div className='flex justify-end items-center gap-2 w-full'>
+                  <p>Git</p>
+                  <CgPushChevronRight />
+                </div>
+              </li>
+
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="md:flex hidden relative z-30">
         <div className="flex flex-row gap-2">
           {categories.map((category) => (
             <Button
               variant="link"
-              className="text-black"
+              className="text-black hover:bg-slate-200 hover:hover:scale-110"
               key={category._id}
               onClick={() => handleCategoryClick(category._id)}
             >
@@ -96,7 +124,7 @@ function Nav() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-black items-center justify-center">
+                <NavigationMenuTrigger className="text-black items-center justify-center hover:bg-slate-200 hover:hover:scale-110">
                   Diğer Ürünler
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -107,6 +135,7 @@ function Nav() {
                           key={others._id}
                           title={others.name}
                           href={`/category/${others._id}`}
+                          className="hover:bg-slate-200"
                         />
                       ))}
                   </ul>
@@ -128,18 +157,16 @@ function Nav() {
           </Button>
         ) : (
           <div className="flex items-center gap-2">
-            <Button variant="link" onClick={handleProfile}>
-              <span className="text-black">{user.firstName}</span>
-
-              <span className="text-black">{user.lastName}</span>
+            <Button variant="link" onClick={handleProfile} className="hover:bg-slate-200 hover:hover:scale-110">
+              <span className="text-black">{user.firstName} {user.lastName}</span>
             </Button>
-            <Button variant="link" className="flex flex-row gap-2 justify-center items-center" onClick={() => router.push('/basket')}>
-              <FaBasketShopping size={14} className="text-black" />
+            <Button variant="link" className="flex flex-row gap-2 justify-center items-center hover:bg-slate-200 hover:hover:scale-110 " onClick={() => router.push('/basket')}>
+              <FaBasketShopping size={14} className="text-black hover:bg-slate-200 hover:hover:scale-110" />
               <span className="text-black">Sepet</span>
             </Button>
             <Button
               variant="link"
-              className="text-black"
+              className="text-black hover:bg-slate-200 hover:hover:scale-110"
               onClick={handleLogout}
             >
               Çıkış Yap

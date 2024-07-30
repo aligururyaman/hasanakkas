@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from 'react'
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '@/redux/reducers/productsReducer';
 
@@ -45,7 +45,7 @@ function Featuredproducts() {
   const filterAktar = products.filter(products => products.category.name === "Aktar")
   const filterAmbalaj = products.filter(products => products.category.name === "Ambalaj")
   const filterKahve = products.filter(products => products.category.name === "Kahve")
-  const filteredit = products.filter(products => products.category.name === "edit")
+  const filterTahin = products.filter(products => products.category.name === "Tahin")
 
 
 
@@ -68,7 +68,7 @@ function Featuredproducts() {
             <ProductList products={filterKahve} title="Kahve Ürünleri" />
           </div>
           <div className='md:flex hidden'>
-            <ProductList products={filteredit} title="Edit Ürünleri" />
+            <ProductList products={filterTahin} title="Tahin Ürünleri" />
           </div>
         </div>
       </div>

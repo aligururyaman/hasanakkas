@@ -1,5 +1,7 @@
+import AboutUs from "@/components/AboutUs";
 import Best from "@/components/Best";
-import Featuredproducts from "@/components/Featuredproducts";
+import Featuredproducts from "@/components/productsComp/Featuredproducts";
+import SearchComp from "@/components/SearchComp";
 import Section from "@/components/Section";
 import UsefulInfo from "@/components/UsefulInfo";
 
@@ -10,6 +12,9 @@ export default function Home() {
 
   return (
     <div>
+      <div>
+        <SearchComp />
+      </div>
       {/* RESPONSİVE YAPILMADI */}
       <div>
         <Section />
@@ -18,9 +23,13 @@ export default function Home() {
       <div>
         <Best />
       </div>
+
       {/* RESPONSİVE YAPILDI */}
       <div>
         <Featuredproducts />
+      </div>
+      <div>
+        <AboutUs />
       </div>
       {/* RESPONSİVE YAPILDI */}
       <div>

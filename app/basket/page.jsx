@@ -5,8 +5,10 @@ import { MdDeleteForever } from 'react-icons/md';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { deleteCart, fetchCart, updateQuantity } from '@/redux/reducers/cartReducer';
 import { fetchProducts } from '@/redux/reducers/productsReducer';
+import { useRouter } from 'next/navigation';
 
 function BasketPage() {
+  const route = useRouter();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items);
   const cartStatus = useSelector((state) => state.cart.status);
@@ -20,6 +22,7 @@ function BasketPage() {
       window.location.reload();
     });
   };
+
   useEffect(() => {
     if (userId) {
       dispatch(fetchCart(userId));
@@ -49,12 +52,16 @@ function BasketPage() {
     }
   };
 
+  const handleOrder = () => {
+    route.push('/order');
+  };
+
   if (cartStatus === 'loading') {
     return <div>Loading...</div>;
   }
 
   if (cartStatus === 'failed') {
-    return <div>Failed to load cart items</div>;
+    return <div>Sepette Urun yok</div>;
   }
 
   return (
@@ -112,7 +119,7 @@ function BasketPage() {
             <p className="text-xl font-bold">{totalAmount} TL</p>
           </div>
           <div className="flex w-full justify-end p-4">
-            <button>
+            <button onClick={handleOrder}>
               Sipariş Tamamla
             </button>
           </div>

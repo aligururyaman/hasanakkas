@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import cloudinary from "cloudinary"
-import { ProviderWrapper } from "@/components/Provider";
+import { ProviderWrapper } from "@/components/utilsComp/Provider";
 import { configDotenv } from "dotenv";
 
 
@@ -34,11 +34,15 @@ export default function RootLayout({ children }) {
     <ProviderWrapper>
       <html lang="en">
         <body className={`${jetbrainsMono.variable}`}>
-          <Header />
-          <div className="p-10">{children}</div>
-          <Footer />
+          <div className="sm:p-10">
+            <div className="mb-10">
+              <Header />
+            </div>
+            {children}
+            <Footer />
+          </div>
         </body>
-      </html>
+      </html >
     </ProviderWrapper >
   );
 }

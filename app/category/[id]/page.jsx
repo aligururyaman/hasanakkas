@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
 import { useSearchParams } from "next/navigation";
-import ProductsByCategory from "@/components/ProductsByCategory";
-import FilterCategory from "@/components/FilterCategory";
+import FilterCategory from "@/components/productsComp/FilterCategory";
+import ProductsByCategory from "@/components/productsComp/ProductsByCategory";
+
 
 function CategoryPage() {
   const searchParams = useSearchParams();

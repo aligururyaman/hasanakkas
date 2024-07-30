@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const serverUrl = process.env.REACT_APP_API_URL || "http://51.20.135.157:2000";
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:2000";
 
 export const fetchCart = createAsyncThunk("cart/fetchCart", async (userId) => {
   const response = await axios.get(`${serverUrl}/api/carts/user/${userId}`);
@@ -32,11 +32,20 @@ export const updateQuantity = createAsyncThunk(
   }
 );
 
-export const deleteCart = createAsyncThunk(
-  "cart/deleteCart",
+export const deleteCartItem = createAsyncThunk(
+  "cart/deleteCartItem",
   async ({ userId, itemId }) => {
     await axios.delete(`${serverUrl}/api/carts/user/${userId}/item/${itemId}`);
     return itemId;
+  }
+);
+
+// Kullanıcıya ait tüm sepeti silen thunk
+export const deleteAllCartsByUserId = createAsyncThunk(
+  "cart/deleteAllCartsByUserId",
+  async (userId) => {
+    await axios.delete(`${serverUrl}/api/carts/user/${userId}`);
+    return userId;
   }
 );
 
@@ -67,7 +76,10 @@ const cartSlice = createSlice({
       .addCase(updateQuantity.fulfilled, (state, action) => {
         state.items = action.payload.items;
       })
-      .addCase(deleteCart.fulfilled, (state) => {
+      .addCase(deleteCartItem.fulfilled, (state, action) => {
+        state.items = state.items.filter((item) => item._id !== action.payload);
+      })
+      .addCase(deleteAllCartsByUserId.fulfilled, (state) => {
         state.items = [];
       });
   },

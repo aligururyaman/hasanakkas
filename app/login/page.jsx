@@ -63,7 +63,7 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button variant="destructive" onClick={handleLogin} disabled={loading}>
+        <Button variant="destructive" onClick={handleLogin} disabled={loading} className="text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
           {loading ? "Yükleniyor..." : "Giriş Yap"}
         </Button>
         <Link href="/signin">

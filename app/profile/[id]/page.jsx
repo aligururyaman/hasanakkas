@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
-import Panel from '@/components/Panel';
+import Panel from '@/components/panelComp/Panel';
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
@@ -12,45 +12,41 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!user) {
-      router.push('/login'); // Kullanıcı giriş yapmamışsa login sayfasına yönlendir
+      router.push('/login');
     } else {
-      setLoading(false); // Kullanıcı giriş yapmışsa loading durumunu false yap
+      setLoading(false);
     }
   }, [user, router]);
 
   if (loading) {
-    return <p>Loading...</p>; // Yükleme sırasında bir yükleme mesajı göster
+    return <p>Loading...</p>;
   }
 
   if (!user) {
-    return null; // Yükleme sırasında boş döndür
+    return null;
   }
 
   return (
     <div className='flex flex-col items-center'>
-      <div className='w-[50rem] h-[10rem] bg-gray-100 flex flex-col items-center rounded-xl shadow-lg gap-5'>
-        <h1 className='text-3xl font-bold'>Profil</h1>
-        <div >
-          <p className='text-2xl'><span>{user.firstName}</span> <span>{user.lastName}</span> </p>
+      <div className='w-[50rem] bg-gray-100 flex flex-col items-center rounded-xl shadow-lg gap-5'>
+        <div className='flex flex-col items-center my-10'>
+          <h1 className='text-3xl font-bold'>Profil Bilgileri</h1>
+          <div>
+            <p className='text-2xl'><span>{user.firstName}</span> <span>{user.lastName}</span> </p>
+          </div>
+          <div>
+            <p className='text-xl'>{user.email}</p>
+          </div>
         </div>
-        <div>
-          <p className='text-xl'>{user.email}</p>
-        </div>
-
       </div>
 
-
-      {
-        user.role === "admin" ? (
-          <div>
-            <Panel />
-          </div>
-        ) : (
-          <p></p>
-        )
-      }
-    </div >
+      {user.role === 'admin' && (
+        <div className='mt-20 flex w-full h-full'>
+          <Panel />
+        </div>
+      )}
+    </div>
   );
-};
+}
 
 export default ProfilePage;

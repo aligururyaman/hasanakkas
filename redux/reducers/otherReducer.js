@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_API_URL || "http://51.20.135.157:2000";
+const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:2000";
 
 export const fetchOther = createAsyncThunk(
   "other/fetchOther",

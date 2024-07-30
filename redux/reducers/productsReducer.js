@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const serverUrl = process.env.REACT_APP_API_URL || "http://51.20.135.157:2000";
+const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:2000";
 
 export const fetchProductsByCategory = createAsyncThunk(
   "products/fetchProductsByCategory",
@@ -43,7 +43,6 @@ export const addProduct = createAsyncThunk(
   }
 );
 
-// Async thunk action creator to delete a product
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (productId, { rejectWithValue }) => {
@@ -56,7 +55,6 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
-// Async thunk action creator to update a product
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
   async ({ productId, productData }, { rejectWithValue }) => {
@@ -72,15 +70,23 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
-// Reducer slice
 const productSlice = createSlice({
   name: "products",
   initialState: {
     loading: false,
     products: [],
+    filteredProducts: [],
+    sortOrder: "default",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setFilteredProducts: (state, action) => {
+      state.filteredProducts = action.payload;
+    },
+    setSortOrder: (state, action) => {
+      state.sortOrder = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -89,6 +95,7 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload;
+        state.filteredProducts = action.payload;
         state.error = null;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
@@ -101,6 +108,7 @@ const productSlice = createSlice({
       .addCase(addProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.products.push(action.payload);
+        state.filteredProducts.push(action.payload);
         state.error = null;
       })
       .addCase(addProduct.rejected, (state, action) => {
@@ -113,6 +121,9 @@ const productSlice = createSlice({
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.products = state.products.filter(
+          (product) => product._id !== action.payload
+        );
+        state.filteredProducts = state.filteredProducts.filter(
           (product) => product._id !== action.payload
         );
         state.error = null;
@@ -131,6 +142,7 @@ const productSlice = createSlice({
         );
         if (updatedIndex !== -1) {
           state.products[updatedIndex] = action.payload;
+          state.filteredProducts[updatedIndex] = action.payload;
         }
         state.error = null;
       })
@@ -144,6 +156,7 @@ const productSlice = createSlice({
       .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload;
+        state.filteredProducts = action.payload;
         state.error = null;
       })
       .addCase(fetchProductsByCategory.rejected, (state, action) => {
@@ -152,5 +165,7 @@ const productSlice = createSlice({
       });
   },
 });
+
+export const { setFilteredProducts, setSortOrder } = productSlice.actions;
 
 export default productSlice.reducer;

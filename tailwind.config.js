@@ -30,6 +30,10 @@ module.exports = {
           DEFAULT: "#F5F7F8",
           foreground: "hsl(var(--primary-foreground))",
         },
+        secondColor: {
+          DEFAULT: "F5EDED",
+          foreground: "hsl(var(--secondColor-foreground))",
+        },
       },
       screens: {
         xs: "480px", // Extra small devices
