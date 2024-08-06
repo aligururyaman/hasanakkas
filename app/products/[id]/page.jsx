@@ -10,6 +10,9 @@ import { DotLoader } from 'react-spinners';
 import { addToCart } from '@/redux/reducers/cartReducer';
 import Suggestion from '@/components/productsComp/Suggestion';
 import ProductsInfo from '@/components/infoComp/ProductsInfo';
+import { FaMinus, FaPlus } from "react-icons/fa";
+import Swal from 'sweetalert2';
+
 
 
 const override = {
@@ -38,6 +41,13 @@ function ProductPage() {
       console.error('User ID is required');
       return;
     }
+    Swal.fire({
+      icon: 'success',
+      title: 'Ürün Sepete Eklendi',
+      timer: 1000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+    });
     console.log('Adding to cart:', { productId: product._id, userId: user._id, quantity: piece });
     dispatch(
       addToCart({
@@ -66,7 +76,7 @@ function ProductPage() {
           </div>
         ) : (
           filteredProducts.length > 0 && filteredProducts.map((product) => (
-            <div key={product._id} className="flex sm:flex-row flex-col gap-20  sm:items-start items-center">
+            <div key={product._id} className="flex sm:flex-row flex-col gap-20  sm:items-start items-center text-white">
               <div className="sm:w-[30rem] sm:h-[28rem] h-[18rem] w-[17rem] ">
                 <img src={product.imageUrl} alt={product.name} className="border-2 rounded-xl" />
               </div>
@@ -79,10 +89,10 @@ function ProductPage() {
                   <h1 className="text-3xl font-bold">{(product.price / 10) * piece},00 <span className="text-4xl">₺</span></h1>
 
 
-                  <div className="flex flex-row gap-1">
-                    <p className="flex justify-center items-center text-5xl font-bold h-12 w-12 border-2 rounded-full cursor-pointer" onClick={() => setPiece(piece + 1)}>+</p>
-                    <Label className="flex justify-center items-center text-5xl font-bold h-12 w-16 border-2 rounded-full">{piece}</Label>
-                    <p className="flex justify-center items-center text-5xl font-bold h-12 w-12 border-2 rounded-full cursor-pointer" onClick={() => setPiece(Math.max(1, piece - 1))}>-</p>
+                  <div className="flex flex-row gap-1 border-2 justify-center items-center h-20 w-40 rounded-lg ">
+                    <p className="flex justify-center items-center text-5xl font-bold  w-16  cursor-pointer border-r h-full bg-gray-800" onClick={() => setPiece(piece + 1)}><FaPlus /></p>
+                    <Label className="flex justify-center items-center text-5xl font-bold h-full w-16">{piece}</Label>
+                    <p className="flex justify-center items-center text-5xl font-bold h-full w-16  cursor-pointer border-l bg-gray-800" onClick={() => setPiece(Math.max(1, piece - 1))}><FaMinus /></p>
                   </div>
 
 

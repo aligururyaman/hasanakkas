@@ -14,6 +14,7 @@ function CategoryPage() {
       <div>
         <FilterCategory />
       </div>
+
       <div className="">
         <ProductsByCategory categoryId={categoryId} />
       </div>

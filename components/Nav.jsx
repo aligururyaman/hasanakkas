@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { PiSignInBold } from "react-icons/pi";
@@ -20,7 +19,6 @@ import { useRouter } from "next/navigation";
 import { FaBasketShopping } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgPushChevronRight } from "react-icons/cg";
-
 
 const ListItem = React.forwardRef(
   ({ className, title, children, href, ...props }, ref) => {
@@ -50,21 +48,21 @@ ListItem.displayName = "ListItem";
 function Nav() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { categories } = useSelector((state) => state.categories);
+  const { categories, loading, error } = useSelector((state) => state.categories);
   const { other } = useSelector((state) => state.other);
   const { user } = useSelector((state) => state.user);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  }
 
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchOther());
     setIsUserLoaded(true);
   }, [dispatch]);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  }
 
   const handleLogout = () => {
     router.push('/')
@@ -86,8 +84,16 @@ function Nav() {
     return null;
   }
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between text-white">
       <div className="flex md:hidden">
         <div onClick={toggleMenu}>
           <GiHamburgerMenu size={33} />
@@ -112,7 +118,7 @@ function Nav() {
           {categories.map((category) => (
             <Button
               variant="link"
-              className="text-black hover:bg-slate-200 hover:hover:scale-110"
+              className=" hover:bg-slate-200 hover:hover:scale-110 hover:text-black"
               key={category._id}
               onClick={() => handleCategoryClick(category._id)}
             >
@@ -124,7 +130,7 @@ function Nav() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-black items-center justify-center hover:bg-slate-200 hover:hover:scale-110">
+                <NavigationMenuTrigger className="items-center text-white justify-center hover:text-black hover:bg-slate-200 hover:hover:scale-110">
                   Diğer Ürünler
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -145,11 +151,11 @@ function Nav() {
           </NavigationMenu>
         </div>
       </div>
-      <div className="flex relative z-30 items-center gap-10">
+      <div className="flex relative z-30 items-center gap-10 text-white hover:text-black">
         {!user ? (
           <Button
             variant="link"
-            className="text-black flex gap-2"
+            className="hover:text-black flex gap-2"
             onClick={() => router.push("/login")}
           >
             <PiSignInBold size={15} />
@@ -157,16 +163,16 @@ function Nav() {
           </Button>
         ) : (
           <div className="flex items-center gap-2">
-            <Button variant="link" onClick={handleProfile} className="hover:bg-slate-200 hover:hover:scale-110">
-              <span className="text-black">{user.firstName} {user.lastName}</span>
+            <Button variant="link" onClick={handleProfile} className="hover:bg-slate-200 hover:hover:scale-110 hover:text-black">
+              <span className="">{user.firstName} {user.lastName}</span>
             </Button>
-            <Button variant="link" className="flex flex-row gap-2 justify-center items-center hover:bg-slate-200 hover:hover:scale-110 " onClick={() => router.push('/basket')}>
-              <FaBasketShopping size={14} className="text-black hover:bg-slate-200 hover:hover:scale-110" />
-              <span className="text-black">Sepet</span>
+            <Button variant="link" className="flex flex-row gap-2 justify-center items-center hover:text-black hover:bg-slate-200 hover:hover:scale-110 " onClick={() => router.push('/basket')}>
+              <FaBasketShopping size={14} className=" hover:text-black hover:bg-slate-200 hover:hover:scale-110" />
+              <span className="">Sepet</span>
             </Button>
             <Button
               variant="link"
-              className="text-black hover:bg-slate-200 hover:hover:scale-110"
+              className=" hover:bg-slate-200 hover:hover:scale-110 hover:text-black"
               onClick={handleLogout}
             >
               Çıkış Yap

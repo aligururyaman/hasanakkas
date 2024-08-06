@@ -21,7 +21,7 @@ function Panel() {
   };
 
   return (
-    <div className=''>
+    <div className='text-white'>
       <div className='flex flex-col my-5 gap-2'>
         <Label className='font-bold text-xl'>İşlem Seçin</Label>
         <Select onValueChange={handleSelectChange}>
@@ -29,7 +29,7 @@ function Panel() {
             <SelectValue placeholder="Yapılacak İşlemi Seçin" />
           </SelectTrigger>
           <SelectContent>
-            <SelectGroup className='bg-background'>
+            <SelectGroup className='bg-background text-white'>
               <SelectItem className='text-xl' value="category">Kategori Oluşturma</SelectItem>
               <SelectItem className='text-xl' value="product">Ürün Ekleme</SelectItem>
               <SelectItem className='text-xl' value="user">Kullanıcı Kontrolü</SelectItem>

@@ -28,7 +28,7 @@ function CompleteOrder() {
     dispatch(createOrder(orderData)).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
         dispatch(deleteAllCartsByUserId(user._id)).then(() => {
-          alert('Order completed successfully!');
+          alert('Spiarişiniz Oluşturuldu!');
           router.push(`/profile/${user._id}`);
         });
       } else {
@@ -40,20 +40,33 @@ function CompleteOrder() {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Telefon Numarası"
-        value={number}
-        onChange={(e) => setNumber(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Adres"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-      />
-      <button onClick={handleSubmit}>Siparişi Tamamla</button>
+    <div className='flex flex-col gap-6 my-20 p-10'>
+      <div>
+        <h1 className='text-white text-3xl font-bold'>Siparişi Tamamla</h1>
+      </div>
+      <div>
+        <div className='flex flex-col gap-4'>
+          <input
+            type="number"
+            placeholder="Telefon Numarası"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            className='p-2 w-80 h-12 rounded-lg border-2 
+            border-gray-500 text-lg '
+          />
+          <input
+            type="text"
+            placeholder="Adres"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className='p-2 w-80 h-12 rounded-lg border-2 
+            border-gray-500 text-lg '
+          />
+        </div>
+      </div>
+      <div>
+        <button className='flex w-80 h-16 border-gray-700 justify-center items-center rounded-xl bg-red-500 text-xl font-bold hover:bg-red-800' onClick={handleSubmit}>Siparişi Tamamla</button>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:2000";
 
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${serverUrl}/api/categories`);
+      const response = await axios.get("/api/categories");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -18,10 +17,7 @@ export const addCategory = createAsyncThunk(
   "categories/addCategory",
   async (categoryData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${serverUrl}/api/categories`,
-        categoryData
-      );
+      const response = await axios.post(`/api/categories`, categoryData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -33,8 +29,7 @@ export const deleteCategory = createAsyncThunk(
   "categories/deleteCategory",
   async (categoryId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${serverUrl}/api/categories/${categoryId}`);
-      return categoryId;
+      await axios.delete(`/api/categories`, { data: { id: categoryId } });
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -45,10 +40,12 @@ export const updateCategory = createAsyncThunk(
   "categories/updateCategory",
   async ({ categoryId, categoryData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${serverUrl}/api/categories/${categoryId}`,
-        categoryData
-      );
+      console.log("id:", categoryId, "data:", categoryData);
+
+      const response = await axios.put(`/api/categories`, {
+        categoryId,
+        categoryData,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

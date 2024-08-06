@@ -1,5 +1,6 @@
 import AboutUs from "@/components/AboutUs";
 import Best from "@/components/Best";
+import AddCategory from "@/components/panelComp/AddCategory";
 import Featuredproducts from "@/components/productsComp/Featuredproducts";
 import SearchComp from "@/components/SearchComp";
 import Section from "@/components/Section";
@@ -12,6 +13,9 @@ export default function Home() {
 
   return (
     <div>
+      <div>
+        <AddCategory />
+      </div>
       <div>
         <SearchComp />
       </div>
@@ -35,6 +39,7 @@ export default function Home() {
       <div>
         <UsefulInfo />
       </div>
+
     </div>
   );
 }

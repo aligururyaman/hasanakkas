@@ -36,7 +36,7 @@ function Suggestion({ categoryId, currentProductId }) {
   };
 
   return (
-    <div className='flex flex-col w-full gap-3 items-center'>
+    <div className='flex flex-col w-full gap-3 items-center text-white'>
       <div>
         <p className='my-4 text-2xl font-bold'>Öneriler</p>
       </div>

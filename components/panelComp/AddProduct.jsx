@@ -250,12 +250,6 @@ const AddProduct = () => {
                     Edit
                   </button>
                   <button
-                    onClick={() => console.log(product.category.name)}
-                    className="bg-blue-500 mt-1 text-white px-[.5vmax] py-1 rounded-md"
-                  >
-                    deneme
-                  </button>
-                  <button
                     onClick={() => handleDeleteProduct(product._id)}
                     className="bg-red-500 text-white mt-1 px-[.5vmax] py-1 rounded-md"
                   >

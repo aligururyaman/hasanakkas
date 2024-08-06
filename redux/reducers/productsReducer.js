@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
 const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:2000";
 
 export const fetchProductsByCategory = createAsyncThunk(
@@ -7,7 +8,7 @@ export const fetchProductsByCategory = createAsyncThunk(
   async (categoryId, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${serverUrl}/api/products/category=${categoryId}`
+        `${serverUrl}/api/products/${categoryId}`
       );
       return response.data;
     } catch (error) {

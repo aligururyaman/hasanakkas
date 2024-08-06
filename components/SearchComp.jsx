@@ -37,20 +37,20 @@ function SearchComp() {
   }
 
   return (
-    <div className='my-12 flex flex-col xl:flex-row justify-between items-center'>
+    <div className='my-12 flex flex-col xl:flex-row justify-between items-center text-white'>
       <div className='flex w-full h-20 justify-center items-center flex-row gap-6 bg-secondColor border-2 border-red-400 shadow-lg rounded-lg'>
         <FaWhatsapp size={45} className='text-gray-400' />
-        <h1 className='text-2xl text-gray-400'>
+        <h1 className='text-2xl text-gray-400 font-medium'>
           Whatsapp'dan Sipariş verebilirsiniz
         </h1>
       </div>
       <div className='flex flex-col justify-center m-10 px-20 gap-2'>
         <div className='flex flex-row gap-3 items-center'>
-          <CiSearch size={45} />
+          <CiSearch size={45} color='white' />
           <input
             type="text"
             placeholder="Aramak İstediğiniz Ürünü Girin"
-            className="peer block w-[25rem] h-16 border-2 text-lg rounded-xl bg-secondColor-foreground p-3"
+            className="peer block w-[25rem] h-16 border-2  rounded-xl bg-secondColor-foreground p-3 text-white text-lg font-medium"
             onChange={handleSearch}
             value={searchTerm}
           />
@@ -63,7 +63,7 @@ function SearchComp() {
                   <li key={product._id} className='flex flex-row text-lg hover:cursor-pointer items-center gap-4 hover:scale-105' onClick={() => openProduct(product._id)}>
                     <img src={product.imageUrl} alt={product.name} className="w-16 h-16 rounded-lg" />
 
-                    <p>{product.name}</p>
+                    <p className='text-lg font-medium'>{product.name}</p>
                     <div className='flex justify-end items-center gap-2 w-full'>
                       <p>Git</p>
                       <CgPushChevronRight />
@@ -77,9 +77,9 @@ function SearchComp() {
           )}
         </div>
       </div>
-      <div className='flex w-full h-20 justify-center items-center flex-row gap-6 bg-secondColor border-2 border-red-400 shadow-lg rounded-lg'>
+      <div className='flex w-full h-20 justify-center items-center  flex-row gap-6 bg-secondColor border-2 border-red-400 shadow-lg rounded-lg'>
         < LiaShippingFastSolid size={45} className='text-gray-400' />
-        <h1 className='text-2xl text-gray-400'>
+        <h1 className='text-2xl text-gray-400 font-medium'>
           500 TL Üstü Ücretsiz Kargo!
         </h1>
       </div>

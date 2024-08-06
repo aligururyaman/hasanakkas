@@ -142,7 +142,7 @@ const AddCategory = () => {
           <tbody>
             {/* Mapping through categories to display in a table */}
             {categories.map((category) => (
-              <tr key={category._id}>
+              <tr key={category._id} className="text-white">
                 <td className="border border-gray-300 px-4 py-2">
                   {category.name}
                 </td>
