@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:2000";
-
 const initialState = {
   user:
     JSON.parse(typeof window !== "undefined" && localStorage.getItem("user")) ||
@@ -12,12 +10,11 @@ const initialState = {
   error: null,
 };
 
-// Define the login thunk
 export const fetchLoginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${serverUrl}/api/signin`, {
+      const response = await axios.post(`/api/signin`, {
         email,
         password,
       });
@@ -37,7 +34,7 @@ export const signUpUser = createAsyncThunk(
   "user/signUp",
   async ({ firstName, lastName, email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${serverUrl}/api/register`, {
+      const response = await axios.post(`/api/register`, {
         firstName,
         lastName,
         email,
@@ -55,7 +52,7 @@ export const getUser = createAsyncThunk(
   "fetch/user",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${serverUrl}/api/user/profile/${id}`);
+      const response = await axios.get(`/api/users/profile/${id}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -68,7 +65,7 @@ export const fetchAllUsers = createAsyncThunk(
   "fetch/allUsers",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${serverUrl}/api/users`);
+      const response = await axios.get(`/api/users`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

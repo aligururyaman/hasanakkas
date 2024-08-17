@@ -7,9 +7,7 @@ export const fetchProductsByCategory = createAsyncThunk(
   "products/fetchProductsByCategory",
   async (categoryId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `${serverUrl}/api/products/${categoryId}`
-      );
+      const response = await axios.get(`/api/products/${categoryId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -21,7 +19,7 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${serverUrl}/api/products`);
+      const response = await axios.get(`/api/products`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -33,10 +31,7 @@ export const addProduct = createAsyncThunk(
   "products/addProduct",
   async (productData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${serverUrl}/api/products`,
-        productData
-      );
+      const response = await axios.post(`/api/products`, productData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -48,7 +43,7 @@ export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (productId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${serverUrl}/api/products/${productId}`);
+      await axios.delete(`/api/products/${productId}`);
       return productId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -61,7 +56,7 @@ export const updateProduct = createAsyncThunk(
   async ({ productId, productData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${serverUrl}/api/products/${productId}`,
+        `/api/products/${productId}`,
         productData
       );
       return response.data;
@@ -139,7 +134,7 @@ const productSlice = createSlice({
       .addCase(updateProduct.fulfilled, (state, action) => {
         state.loading = false;
         const updatedIndex = state.products.findIndex(
-          (product) => product._id === action.payload._id
+          (product) => product._id === action.payload
         );
         if (updatedIndex !== -1) {
           state.products[updatedIndex] = action.payload;

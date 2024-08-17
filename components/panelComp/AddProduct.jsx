@@ -56,6 +56,7 @@ const AddProduct = () => {
     }
   };
 
+
   const handleEditProduct = (product) => {
     setName(product.name);
     setPrice(product.price);
@@ -68,6 +69,7 @@ const AddProduct = () => {
 
   const handleUpdateProduct = async () => {
     const formData = new FormData();
+    formData.append("id", selectedProductId);
     formData.append("name", name);
     formData.append("price", price);
     formData.append("quantity", quantity);
@@ -99,6 +101,7 @@ const AddProduct = () => {
   };
 
   const handleDeleteProduct = async (productId) => {
+
     try {
       await dispatch(deleteProduct(productId)).unwrap();
       Swal.fire({
@@ -111,6 +114,7 @@ const AddProduct = () => {
       });
     } catch (error) {
       console.error("Error deleting product:", error);
+
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -181,7 +185,7 @@ const AddProduct = () => {
           </select>
           <input
             type="file"
-            className="mb-2"
+            className="mb-2 text-white"
             onChange={(e) => setImage(e.target.files[0])}
           />
           <div className="flex justify-end items-center">
@@ -203,7 +207,7 @@ const AddProduct = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="text-white">
         <h2 className="text-xl font-bold mb-2">Products List</h2>
         <table className="w-full border-collapse border border-gray-300">
           <thead className="text-[.9vmax]">

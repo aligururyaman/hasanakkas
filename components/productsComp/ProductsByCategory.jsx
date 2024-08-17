@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "@/redux/reducers/productsReducer";
+import { fetchProducts, fetchProductsByCategory } from "@/redux/reducers/productsReducer";
 import { Button } from "../ui/button";
 import { FaBasketShopping } from "react-icons/fa6";
 import { DotLoader } from "react-spinners";
@@ -28,6 +28,7 @@ function ProductsByCategory() {
 
   useEffect(() => {
     dispatch(fetchProducts());
+
   }, [dispatch]);
 
   let filteredProducts = products.filter(product => product.category && product.category._id === categoryId);
@@ -71,7 +72,7 @@ function ProductsByCategory() {
     <div className="flex sm:justify-normal justify-center flex-wrap gap-5 relative mb-40">
       {filteredProducts.length > 0 ? (
         filteredProducts.map((product) => (
-          <div onClick={() => handleCategoryClick(product._id)}>
+          <div onClick={() => handleCategoryClick(product._id)} key={product._id}>
             <CardContainer className="inter-var">
               <CardBody
                 key={product._id}

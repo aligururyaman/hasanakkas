@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { FaBasketShopping } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgPushChevronRight } from "react-icons/cg";
+import { fetchProductsByCategory } from "@/redux/reducers/productsReducer";
 
 const ListItem = React.forwardRef(
   ({ className, title, children, href, ...props }, ref) => {
@@ -77,6 +78,7 @@ function Nav() {
     const categoryId = `${id}`;
     router.push(`/category/${id}?categoryId=${categoryId}`);
     setMenuOpen(false);
+    dispatch(fetchProductsByCategory(categoryId))
   };
 
   // Kullanıcı durumu yüklenene kadar boş bir render yap
