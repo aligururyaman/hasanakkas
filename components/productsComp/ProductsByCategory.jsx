@@ -31,7 +31,12 @@ function ProductsByCategory() {
 
   }, [dispatch]);
 
-  let filteredProducts = products.filter(product => product.category && product.category._id === categoryId);
+
+  let filteredProducts = [];
+  if (products && Array.isArray(products)) {
+    filteredProducts = products.filter(product => product.category && product.category._id === categoryId);
+  }
+
 
   if (sortOrder === "fArtan") {
     filteredProducts.sort((a, b) => a.price - b.price);

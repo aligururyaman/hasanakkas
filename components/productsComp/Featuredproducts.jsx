@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect } from 'react'
-import { Button } from '../ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '@/redux/reducers/productsReducer';
 import { useRouter } from 'next/navigation';

@@ -7,7 +7,7 @@ export const fetchOther = createAsyncThunk(
   "other/fetchOther",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`api/others`);
+      const response = await axios.get(`/api/others`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

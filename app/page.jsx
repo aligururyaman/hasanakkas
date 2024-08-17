@@ -14,9 +14,7 @@ export default function Home() {
 
   return (
     <div>
-      <div>
-        <AddProduct />
-      </div>
+
       <div>
         <SearchComp />
       </div>

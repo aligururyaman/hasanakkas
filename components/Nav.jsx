@@ -128,7 +128,7 @@ function Nav() {
             </Button>
           ))}
         </div>
-        <div className="flex flex-row justify-center relative z-30">
+        <div className="flex flex-row justify-center relative z-30 text-black">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>

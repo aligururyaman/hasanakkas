@@ -67,7 +67,7 @@ function LoginPage() {
           {loading ? "Yükleniyor..." : "Giriş Yap"}
         </Button>
         <Link href="/signin">
-          <Button variant="link" className="text-black text-sm font-thin">
+          <Button variant="link" className=" text-sm font-thin">
             Hesabınız yok mu? Hesap Oluşturun.
           </Button>
         </Link>

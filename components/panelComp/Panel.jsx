@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/select";
 import AddCategory from './AddCategory';
 import AddProduct from './AddProduct';
-import UserControl from './UserControl';
 import Orders from './Orders';
 import { Label } from '@radix-ui/react-label';
 
@@ -32,7 +31,6 @@ function Panel() {
             <SelectGroup className='bg-background text-white'>
               <SelectItem className='text-xl' value="category">Kategori Oluşturma</SelectItem>
               <SelectItem className='text-xl' value="product">Ürün Ekleme</SelectItem>
-              <SelectItem className='text-xl' value="user">Kullanıcı Kontrolü</SelectItem>
               <SelectItem className='text-xl' value="order">Siparişleri Görüntüleme</SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -42,7 +40,6 @@ function Panel() {
         <div>
           {selectedItem === "category" && <AddCategory />}
           {selectedItem === "product" && <AddProduct />}
-          {selectedItem === "user" && <UserControl />}
           {selectedItem === "order" && <Orders />}
         </div>
       </div>

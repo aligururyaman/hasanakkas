@@ -23,12 +23,13 @@ function SignUpPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signUpUser(form));
+    // yönlendirme ekle profile atsın yada anasafya bişetler yapsın işte
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center text-white">
       <div className="flex flex-col items-center justify-center py-2 bg-primary w-[40rem] h-[45rem] rounded-2xl border-2 shadow-xl ">
-        <h1 className="text-4xl font-bold mb-8">Kayıt Ol</h1>
+        <h1 className="text-4xl font-bold mb-8 text-black">Kayıt Ol</h1>
         <form className="w-full max-w-md" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">Ad</label>
