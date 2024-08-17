@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:2000";
-
 export const fetchProductsByCategory = createAsyncThunk(
   "products/fetchProductsByCategory",
   async (categoryId, { rejectWithValue }) => {

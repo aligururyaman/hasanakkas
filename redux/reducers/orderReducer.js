@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:2000";
-
 export const createOrder = createAsyncThunk(
   "order/createOrder",
   async (orderData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${serverUrl}/api/order`, orderData, {
+      const response = await axios.post(`/api/order`, orderData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -23,7 +21,7 @@ export const fetchOrders = createAsyncThunk(
   "order/fetchOrders",
   async (_, { getState, rejectWithValue }) => {
     try {
-      const response = await axios.get(`${serverUrl}/api/orders`);
+      const response = await axios.get(`/api/orders`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

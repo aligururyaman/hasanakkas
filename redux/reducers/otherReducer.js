@@ -7,7 +7,7 @@ export const fetchOther = createAsyncThunk(
   "other/fetchOther",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${serverUrl}/api/others`);
+      const response = await axios.get(`api/others`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -19,7 +19,7 @@ export const addOther = createAsyncThunk(
   "other/addOther",
   async (otherData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${serverUrl}/api/others`, otherData);
+      const response = await axios.post(`/api/others`, otherData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -31,7 +31,7 @@ export const deleteOther = createAsyncThunk(
   "other/deleteOther",
   async (otherId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${serverUrl}/api/others/${otherId}`);
+      await axios.delete(`/api/others/${otherId}`);
       return otherId;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -43,10 +43,7 @@ export const updateOther = createAsyncThunk(
   "other/updateOther",
   async ({ otherId, otherData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${serverUrl}/api/others/${otherId}`,
-        otherData
-      );
+      const response = await axios.put(`/api/others/${otherId}`, otherData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

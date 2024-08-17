@@ -1,17 +1,15 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:2000";
-
 export const fetchCart = createAsyncThunk("cart/fetchCart", async (userId) => {
-  const response = await axios.get(`${serverUrl}/api/carts/user/${userId}`);
+  const response = await axios.get(`/api/carts/user/${userId}`);
   return response.data;
 });
 
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }) => {
-    const response = await axios.post(`${serverUrl}/api/carts`, {
+    const response = await axios.post(`/api/carts`, {
       userId,
       productId,
       quantity,
@@ -23,7 +21,7 @@ export const addToCart = createAsyncThunk(
 export const updateQuantity = createAsyncThunk(
   "cart/updateQuantity",
   async ({ userId, productId, quantity }) => {
-    const response = await axios.put(`${serverUrl}/api/carts`, {
+    const response = await axios.put(`/api/carts`, {
       userId,
       productId,
       quantity,
@@ -35,7 +33,7 @@ export const updateQuantity = createAsyncThunk(
 export const deleteCartItem = createAsyncThunk(
   "cart/deleteCartItem",
   async ({ userId, itemId }) => {
-    await axios.delete(`${serverUrl}/api/carts/user/${userId}/item/${itemId}`);
+    await axios.delete(`/api/carts/user/${userId}/item/${itemId}`);
     return itemId;
   }
 );
@@ -44,7 +42,7 @@ export const deleteCartItem = createAsyncThunk(
 export const deleteAllCartsByUserId = createAsyncThunk(
   "cart/deleteAllCartsByUserId",
   async (userId) => {
-    await axios.delete(`${serverUrl}/api/carts/user/${userId}`);
+    await axios.delete(`/api/carts/user/${userId}`);
     return userId;
   }
 );
