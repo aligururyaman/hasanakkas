@@ -1,5 +1,8 @@
 import mongoose, { Schema, model } from "mongoose";
 
+// "Diğer" kategorisinin ObjectId'sini buraya ekleyin
+const defaultCategoryId = "64c8e73cfb48ac0012d14d6e";
+
 const productSchema = new Schema({
   name: {
     type: String,
@@ -22,6 +25,7 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Category",
     required: true,
+    default: defaultCategoryId, // Buraya "Diğer" kategorisinin ObjectId'sini koyun
   },
   imageUrl: {
     type: String,

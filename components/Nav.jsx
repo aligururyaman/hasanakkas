@@ -21,30 +21,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { CgPushChevronRight } from "react-icons/cg";
 import { fetchProductsByCategory } from "@/redux/reducers/productsReducer";
 
-const ListItem = React.forwardRef(
-  ({ className, title, children, href, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            href={href}
-            className={cn(
-              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-              className
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-              {children}
-            </p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    );
-  }
-);
-ListItem.displayName = "ListItem";
+
 
 function Nav() {
   const dispatch = useDispatch();
@@ -80,6 +57,7 @@ function Nav() {
     setMenuOpen(false);
     dispatch(fetchProductsByCategory(categoryId))
   };
+
 
   // Kullanıcı durumu yüklenene kadar boş bir render yap
   if (!isUserLoaded) {
@@ -128,30 +106,7 @@ function Nav() {
             </Button>
           ))}
         </div>
-        <div className="flex flex-row justify-center relative z-30 text-black">
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="items-center text-white justify-center hover:text-black hover:bg-slate-200 hover:hover:scale-110">
-                  Diğer Ürünler
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[100px] p-4 md:w-[200px] md:grid-cols-2 lg:w-[300px] bg-primary">
-                    {other &&
-                      other.map((others) => (
-                        <ListItem
-                          key={others._id}
-                          title={others.name}
-                          href={`/category/${others._id}`}
-                          className="hover:bg-slate-200"
-                        />
-                      ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
+
       </div>
       <div className="flex relative z-30 items-center gap-10 text-white hover:text-black">
         {!user ? (

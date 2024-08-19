@@ -99,7 +99,7 @@ const AddCategory = () => {
           <input
             type="text"
             placeholder="Enter category name"
-            className="border border-gray-300 rounded-md p-2 w-full md:w-auto mb-2 md:mr-2"
+            className="border text-black border-gray-300 rounded-md p-2 w-full md:w-auto mb-2 md:mr-2"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required

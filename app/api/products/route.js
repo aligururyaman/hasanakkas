@@ -35,7 +35,7 @@ export async function POST(req) {
     const name = formData.get("name");
     const price = formData.get("price");
     const description = formData.get("description");
-    const category = formData.get("category");
+    let category = formData.get("category");
     const quantity = formData.get("quantity");
     const file = formData.get("image");
 
@@ -46,6 +46,10 @@ export async function POST(req) {
 
     const imageUrl = await uploadImageToCloudinary(file);
     const slug = toSlug(name);
+
+    if (!category || category === "") {
+      category = "64c8e73cfb48ac0012d14d6e"; // "Diğer" kategorisinin ObjectId'si
+    }
 
     const product = new Products({
       name,

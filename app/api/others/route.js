@@ -31,10 +31,10 @@ export async function POST(req) {
       );
     }
 
-    const newOther = new Other({ name });
-    await newOther.save();
+    const newOthers = new Other({ name });
+    await newOthers.save();
 
-    return NextResponse.json(newOther, { status: 201 });
+    return NextResponse.json(newOthers, { status: 201 });
   } catch (error) {
     console.error("POST Error:", error);
     return NextResponse.json(

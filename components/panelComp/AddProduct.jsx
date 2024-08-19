@@ -82,8 +82,8 @@ const AddProduct = () => {
       resetForm();
       Swal.fire({
         icon: 'success',
-        title: 'Product Updated!',
-        text: 'The product has been successfully updated.',
+        title: 'Ürün Kaydedildi',
+        text: 'Sorunsuz bir şekilde kaydedildi',
         timer: 1000,
         timerProgressBar: true,
         allowOutsideClick: false,
@@ -137,36 +137,36 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container p-4">
-      <h1 className="text-2xl font-bold mb-4">Products</h1>
+    <div className="container p-4 text-black">
+      <h1 className="text-2xl font-bold mb-4 text-white">Ürünlers</h1>
       <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="mb-4">
-          <h2 className="text-xl font-bold mb-2">
-            {isEditing ? "Edit Product" : "Add Product"}
+          <h2 className="text-xl font-bold mb-2 text-white">
+            {isEditing ? "Ürün Düzenle" : "Ürün Ekle"}
           </h2>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Ürün Adı"
             className="border border-gray-300 rounded-md p-2 mb-2 w-full"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             type="number"
-            placeholder="Price"
+            placeholder="Fiyatı"
             className="border border-gray-300 rounded-md p-2 mb-2 w-full"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
           <input
             type="number"
-            placeholder="Quantity"
+            placeholder="Stok Sayısı"
             className="border border-gray-300 rounded-md p-2 mb-2 w-full"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
           />
           <textarea
-            placeholder="Description"
+            placeholder="Açıklama"
             className="border border-gray-300 rounded-md p-2 mb-2 w-full"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -176,11 +176,12 @@ const AddProduct = () => {
             onChange={(e) => setCategory(e.target.value)}
             className="border border-gray-300 rounded-md p-2 mb-2 w-full"
           >
-            <option value="">Select Category</option>
+            <option value="">Kategori Seç</option>
             {categories.map((category) => (
               <option key={category._id} value={category._id}>
                 {category.name}
               </option>
+
             ))}
           </select>
           <input
@@ -194,31 +195,31 @@ const AddProduct = () => {
                 onClick={handleUpdateProduct}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md w-full md:w-auto"
               >
-                Update Product
+                Ürün Güncelle
               </button>
             ) : (
               <button
                 onClick={handleAddProduct}
                 className="bg-green-500 text-white px-4 py-2 rounded-md w-full md:w-auto"
               >
-                Add Product
+                Ürün Ekle
               </button>
             )}
           </div>
         </div>
       </div>
       <div className="text-white">
-        <h2 className="text-xl font-bold mb-2">Products List</h2>
+        <h2 className="text-xl font-bold mb-2">Ürün Listesi</h2>
         <table className="w-full border-collapse border border-gray-300">
           <thead className="text-[.9vmax]">
             <tr>
-              <th className="border border-gray-300 px-[.4vmax] py-2">Name</th>
-              <th className="border border-gray-300 px-[.4vmax] py-2">Price</th>
-              <th className="border border-gray-300 px-[.4vmax] py-2">Stock</th>
-              <th className="border border-gray-300 px-[.4vmax] py-2">Description</th>
-              <th className="border border-gray-300 px-[.4vmax] py-2">Category</th>
-              <th className="border border-gray-300 px-[.4vmax] py-2">Image</th>
-              <th className="border border-gray-300 px-[.4vmax] py-2">Actions</th>
+              <th className="border border-gray-300 px-[.4vmax] py-2">Ürün Adı</th>
+              <th className="border border-gray-300 px-[.4vmax] py-2">Fiyat</th>
+              <th className="border border-gray-300 px-[.4vmax] py-2">Stok</th>
+              <th className="border border-gray-300 px-[.4vmax] py-2">Açıklama</th>
+              <th className="border border-gray-300 px-[.4vmax] py-2">Kategori</th>
+              <th className="border border-gray-300 px-[.4vmax] py-2">Resim</th>
+              <th className="border border-gray-300 px-[.4vmax] py-2">Komutlar</th>
             </tr>
           </thead>
           <tbody>
@@ -251,13 +252,13 @@ const AddProduct = () => {
                     onClick={() => handleEditProduct(product)}
                     className="bg-blue-500 mt-1 text-white px-[.5vmax] py-1 rounded-md"
                   >
-                    Edit
+                    Düzenle
                   </button>
                   <button
                     onClick={() => handleDeleteProduct(product._id)}
                     className="bg-red-500 text-white mt-1 px-[.5vmax] py-1 rounded-md"
                   >
-                    Delete
+                    Sil
                   </button>
                 </td>
               </tr>
