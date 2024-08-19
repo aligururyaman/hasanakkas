@@ -6,12 +6,6 @@ import toSlug from "../../utils/helpers";
 import uploadImageToCloudinary from "../../utils/fileUpload";
 import deleteImageFromCloudinary from "../../utils/fileDelete";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function GET(req, { params }) {
   await dbConnect();
 

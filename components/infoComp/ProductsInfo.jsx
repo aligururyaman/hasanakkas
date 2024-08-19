@@ -57,7 +57,7 @@ function ProductsInfo({ categoryName }) {
             <p className='font-bold text-xl'>Lezzetin sırrı doğallıkta saklıdır. Biz de bu sırra sadık kalarak en taze, en kaliteli ve en özel baharatları sizlerle buluşturuyoruz. Sofralarınıza kattığımız her baharatla, doğanın mucizelerini keşfetmeye davet ediyoruz.</p>
           </div>
           <div className='flex w-full justify-center my-20'>
-            <h1 className='text-3xl font-bold'>HASAN AKKAŞ 1900'DEN BERİ...</h1>
+            <h1 className='text-3xl font-bold'>HASAN AKKAŞ 1900&apos;DEN BERİ...</h1>
           </div>
         </div>
       ) : (

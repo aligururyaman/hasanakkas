@@ -27,7 +27,7 @@ function AmbalajInfo() {
         <p className='font-bold text-xl'>Lezzetin sırrı doğallıkta saklıdır. Biz de bu sırra sadık kalarak en dayanıklı, en kaliteli ve en özel ambalaj ürünlerini sizlerle buluşturuyoruz. Ürünlerinize kattığımız her ambalajla, kalite ve güvenliği keşfetmeye davet ediyoruz.</p>
       </div>
       <div className='flex w-full justify-center my-20'>
-        <h1 className='text-3xl font-bold'>HASAN AKKAŞ 1900'DEN BERİ...</h1>
+        <h1 className='text-3xl font-bold'>HASAN AKKAŞ 1900&apos;DEN BERİ...</h1>
       </div>
     </div>
 

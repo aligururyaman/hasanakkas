@@ -4,12 +4,6 @@ import { NextResponse } from "next/server";
 import toSlug from "../utils/helpers";
 import uploadImageToCloudinary from "../utils/fileUpload";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function GET(req) {
   await dbConnect();
 
