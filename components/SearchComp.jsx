@@ -41,7 +41,7 @@ function SearchComp() {
       <div className='flex w-full h-20 justify-center items-center flex-row gap-6 bg-secondColor border-2 border-red-400 shadow-lg rounded-lg'>
         <FaWhatsapp size={45} className='text-gray-400' />
         <h1 className='text-2xl text-gray-400 font-medium'>
-          Whatsapp'dan Sipariş verebilirsiniz
+          Whatsappdan Sipariş verebilirsiniz
         </h1>
       </div>
       <div className='flex flex-col justify-center m-10 px-20 gap-2'>
